@@ -56,7 +56,7 @@ export class AuthService {
      return await this.generateJWT(name, user.id);
 
     }
-    async signin({email , password}: SigninParams){
+    async login({email , password}: SigninParams){
        const user = await this.prismaService.user.findUnique({
            where:{
                email
@@ -74,6 +74,12 @@ export class AuthService {
         }
 
         return await this.generateJWT(user.name, user.id);
+    }
+
+
+    generateProductKey(email : String , userType: UserType){
+        const string = `${email}-${userType}-${process.env.PRODUCT_SECRET}`;
+        return bcrypt.hash(string , 10);
     }
 }
 

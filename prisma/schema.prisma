@@ -37,7 +37,7 @@ model Message {
 
 model Home{
   id                    Int @id @default(autoincrement())
-  addres                String
+  address               String
   number_of_bedrooms    Int
   number_of_bathrooms   Float
   city                  String
