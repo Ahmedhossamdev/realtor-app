@@ -65,7 +65,7 @@ model Image {
 
 enum ProperType {
   RESIDENTAIL
-  CONDOM
+  CONDO
 }
 
 enum UserType {

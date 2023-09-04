@@ -1,52 +1,141 @@
 import {ProperType} from "@prisma/client";
-import {Expose , Exclude} from "class-transformer";
-export class HomeResponseDto{
+import {Expose, Exclude, Type} from "class-transformer";
+import {IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, ValidateNested} from "class-validator";
+
+export class HomeResponseDto {
 
     id: number;
     address: string;
 
     @Exclude()
-    number_of_bedrooms : number;
+    number_of_bedrooms: number;
 
     @Expose({name: "numberOfBedrooms"})
-    numberOfBedrooms(){
+    numberOfBedrooms() {
         return this.number_of_bedrooms
     }
 
     @Exclude()
-    number_of_bathrooms : number;
+    number_of_bathrooms: number;
+
     @Expose({name: "numberOfBathrooms"})
-    numberOfBathrooms(){
+    numberOfBathrooms() {
         return this.number_of_bathrooms;
     }
-    city : string;
-    
-    image : string;
+
+    city: string;
+
+    image: string;
     @Exclude()
-    listed_date : Date;
+    listed_date: Date;
+
     @Expose({name: "listedDate"})
-    listedDate(){
+    listedDate() {
         return this.listed_date;
     }
+
     @Exclude()
-    land_size : number;
+    land_size: number;
+
     @Expose({name: "landSize"})
-    landSize(){
+    landSize() {
         return this.land_size;
     }
 
-    price : number;
-    property : ProperType;
+    price: number;
+    property: ProperType;
 
     @Exclude()
-    created_at : Date;
+    created_at: Date;
     @Exclude()
-    updated_at : Date;
+    updated_at: Date;
     @Exclude()
-    realtor_id : number;
+    realtor_id: number;
 
 
     constructor(paritial: Partial<HomeResponseDto>) {
-        Object.assign(this , paritial);
+        Object.assign(this, paritial);
     }
+}
+
+
+// array of objects
+class Image{
+    @IsString()
+    @IsNotEmpty()
+    url : string;
+}
+
+export class CreateHomeDto {
+    @IsString()
+    @IsNotEmpty()
+    address: string;
+
+    @IsNumber()
+    @IsPositive()
+    numberOfBathrooms: number;
+
+    @IsNumber()
+    @IsPositive()
+    numberOfBedrooms: number;
+
+    @IsString()
+    @IsNotEmpty()
+    city: string;
+
+    @IsNumber()
+    @IsPositive()
+    price: number;
+
+    @IsNumber()
+    @IsPositive()
+    landSize: number;
+
+    @IsEnum(ProperType)
+    propertyType: ProperType;
+
+    @IsArray()
+    @ValidateNested({each: true})
+    @Type(() => Image)
+
+    images: Image[];
+}
+
+
+export class UpdateHomeDto {
+
+    @IsOptional()
+    @IsString()
+    @IsNotEmpty()
+    address?: string;
+
+    @IsOptional()
+    @IsNumber()
+    @IsPositive()
+    numberOfBathrooms?: number;
+    @IsOptional()
+    @IsNumber()
+    @IsPositive()
+    numberOfBedrooms?: number;
+    @IsOptional()
+    @IsString()
+    @IsNotEmpty()
+    city?: string;
+    @IsOptional()
+    @IsNumber()
+    @IsPositive()
+    price?: number;
+
+
+    @IsOptional()
+    @IsNumber()
+    @IsPositive()
+    landSize?: number;
+
+
+    @IsOptional()
+    @IsEnum(ProperType)
+    propertyType?: ProperType;
+
+
 }
