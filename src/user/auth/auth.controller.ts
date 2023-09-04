@@ -4,6 +4,7 @@ import {GenerateProductKeyDto, SigninDto, SignupDto} from "../auth.dto";
 import {UserType} from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 import {User, UserInfo} from "../decorators/user.decorator";
+import {Roles} from "../../decorators/roles.decorator";
 
 @Controller('/auth')
 

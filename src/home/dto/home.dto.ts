@@ -136,6 +136,11 @@ export class UpdateHomeDto {
     @IsOptional()
     @IsEnum(ProperType)
     propertyType?: ProperType;
+}
 
 
+export class InquireDto{
+    @IsString()
+    @IsNotEmpty()
+    message: string;
 }
